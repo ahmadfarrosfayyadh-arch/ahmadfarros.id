@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Farros Fayyadh | Digital Innovator & Tech Creator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f3ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            900: '#1e1b4b',
+                            accent: '#06b6d4',
+                            neon: '#a855f7'
+                        },
+                        darkBg: '#090d16',
+                        cardBg: 'rgba(15, 23, 42, 0.75)',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'glow': 'glow 3s infinite alternate',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%': { boxShadow: '0 0 15px rgba(99, 102, 241, 0.4)' },
+                            '100%': { boxShadow: '0 0 35px rgba(168, 85, 247, 0.8)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-12px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #080c14;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Glassmorphism effects */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-card {
+            background: rgba(20, 30, 55, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(99, 102, 241, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #080c14;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4f46e5;
+        }
+
+        /* Custom Cursor canvas overlay */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #a855f7 0%, #6366f1 50%, #06b6d4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #d97706 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen selection:bg-brand-500 selection:text-white">
+
+    <!-- Interactive Canvas Particles background -->
+    <canvas id="particleCanvas"></canvas>
+
+    <header class="fixed top-0 left-0 w-full z-50 px-4 lg:px-8 py-4 transition-all duration-300" id="mainHeader">
+        <div class="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-3.5 flex items-center justify-between shadow-2xl">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-brand-neon p-0.5 transition-transform duration-300 group-hover:scale-110">
+                    <div class="w-full h-full bg-darkBg rounded-[10px] flex items-center justify-center font-bold text-lg text-white">
+                        AF
+                    </div>
+                </div>
+                <span class="font-extrabold text-lg tracking-tight text-white group-hover:text-brand-accent transition-colors">
+                    Ahmad Farros<span class="text-brand-500">.</span>
+                </span>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#about" class="hover:text-brand-accent transition-colors">Tentang</a>
+                <a href="#services" class="hover:text-brand-accent transition-colors">Layanan</a>
+                <a href="#portfolio" class="hover:text-brand-accent transition-colors">Portofolio</a>
+                <a href="#instagram" class="hover:text-brand-accent transition-colors flex items-center gap-1.5">
+                    <i class="fab fa-instagram text-pink-500"></i> IG Highlights
+                </a>
+                <a href="#calculator" class="hover:text-brand-accent transition-colors">Estimator</a>
+            </nav>
+
+            <!-- Actions & Audio Toggle -->
+            <div class="flex items-center gap-3">
+                <button id="soundToggleBtn" onclick="toggleSoundFeedback()" class="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:text-white hover:border-brand-500 transition-all" title="Toggle Interactive Sound">
+                    <i class="fas fa-volume-xmark text-sm" id="soundIcon"></i>
+                </button>
+
+                <a href="#contact" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-brand-neon text-white font-semibold text-sm hover:opacity-90 transition-all shadow-lg shadow-brand-600/30">
+                    <span>Hubungi</span>
+                    <i class="fas fa-arrow-right text-xs"></i>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden w-10 h-10 rounded-xl glass-card flex items-center justify-center text-white">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div id="mobileDrawer" class="hidden md:hidden max-w-7xl mx-auto mt-2 glass-panel rounded-2xl p-6 flex flex-col gap-4 text-center">
+            <a href="#about" class="py-2 text-gray-300 hover:text-white border-b border-gray-800">Tentang</a>
+            <a href="#services" class="py-2 text-gray-300 hover:text-white border-b border-gray-800">Layanan</a>
+            <a href="#portfolio" class="py-2 text-gray-300 hover:text-white border-b border-gray-800">Portofolio</a>
+            <a href="#instagram" class="py-2 text-gray-300 hover:text-white border-b border-gray-800">Instagram Hub</a>
+            <a href="#calculator" class="py-2 text-gray-300 hover:text-white border-b border-gray-800">Estimator Cost</a>
+            <a href="#contact" class="py-2.5 rounded-xl bg-brand-600 text-white font-bold">Hubungi Saya</a>
+        </div>
+    </header>
+
+    <section class="relative pt-36 pb-20 md:pt-48 md:pb-32 px-4 z-10 overflow-hidden">
+        <!-- Glowing background blobs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-600/20 rounded-full blur-[120px] pointer-events-none"></div>
+        <div class="absolute top-1/3 right-10 w-80 h-80 bg-brand-neon/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="lg:col-span-7 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border border-brand-500/30 text-xs font-semibold text-brand-accent mb-6 animate-float">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    <span>Available for Projects & Collaboration</span>
+                </div>
+
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight mb-6">
+                    Ahmad Farros <br>
+                    <span class="text-gradient">Fayyadh</span>
+                </h1>
+
+                <p class="text-lg sm:text-xl text-gray-300 max-w-2xl mb-8 font-normal leading-relaxed">
+                    Creative Digital Innovator, Tech Content Creator & Tech Strategist. Membangun karya digital modern, strategi brand visual, dan pengalaman interaktif berkelas.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 mb-12">
+                    <a href="#portfolio" class="px-8 py-4 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-neon text-white font-bold text-base hover:shadow-lg hover:shadow-brand-500/40 transition-all flex items-center gap-3">
+                        <span>Jelajahi Karya</span>
+                        <i class="fas fa-compass"></i>
+                    </a>
+                    <a href="https://www.instagram.com/ahmadfarrosfayyadh/" target="_blank" class="px-7 py-4 rounded-xl glass-card hover:border-pink-500/50 text-white font-bold text-base flex items-center gap-3 transition-all">
+                        <i class="fab fa-instagram text-pink-500 text-lg"></i>
+                        <span>@ahmadfarrosfayyadh</span>
+                    </a>
+                </div>
+
+                <!-- Stats Counter -->
+                <div class="grid grid-cols-3 gap-4 pt-8 border-t border-gray-800/80 max-w-lg mx-auto lg:mx-0">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white text-gradient" id="statProjects">50+</div>
+                        <div class="text-xs sm:text-sm text-gray-400 mt-1">Projek Selesai</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white text-gradient" id="statReach">100K+</div>
+                        <div class="text-xs sm:text-sm text-gray-400 mt-1">Audience Reach</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-white text-gradient" id="statExp">4+ Thn</div>
+                        <div class="text-xs sm:text-sm text-gray-400 mt-1">Pengalaman</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Badge & Interactive Card -->
+            <div class="lg:col-span-5 flex justify-center">
+                <div class="relative w-full max-w-md group">
+                    <!-- Glow effect -->
+                    <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-600 via-brand-neon to-brand-accent opacity-50 group-hover:opacity-100 blur-xl transition duration-500"></div>
+
+                    <!-- Main Card -->
+                    <div class="relative glass-panel rounded-3xl p-6 sm:p-8 flex flex-col items-center text-center">
+                        <div class="relative w-36 h-36 mb-6">
+                            <div class="w-full h-full rounded-2xl p-1 bg-gradient-to-tr from-brand-neon via-brand-500 to-brand-accent animate-glow">
+                                <img src="images/fotofarros.jpg" alt="Ahmad Farros Fayyadh" class="w-full h-full object-cover rounded-[14px]">
+                            </div>
+                            <div class="absolute -bottom-2 -right-2 bg-emerald-500 text-darkBg p-2 rounded-xl text-xs font-bold flex items-center gap-1 shadow-lg">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Verified</span>
+                            </div>
+                        </div>
+
+                        <h3 class="text-2xl font-bold text-white mb-1">Ahmad Farros Fayyadh</h3>
+                        <p class="text-sm text-brand-accent font-medium mb-4">@ahmadfarrosfayyadh</p>
+
+                        <div class="flex flex-wrap justify-center gap-2 mb-6">
+                            <span class="px-3 py-1 rounded-full bg-brand-900/80 border border-brand-500/30 text-xs text-brand-100">Tech Creator</span>
+                            <span class="px-3 py-1 rounded-full bg-brand-900/80 border border-brand-500/30 text-xs text-brand-100">Web Developer</span>
+                            <span class="px-3 py-1 rounded-full bg-brand-900/80 border border-brand-500/30 text-xs text-brand-100">Digital Strategist</span>
+                        </div>
+
+                        <p class="text-xs text-gray-300 leading-relaxed mb-6 glass-card p-4 rounded-xl">
+                            "Mengkombinasikan teknologi modern & estetika visual untuk hasil karya digital bernilai tinggi."
+                        </p>
+
+                        <!-- Social Link Bar -->
+                        <div class="flex items-center gap-3 w-full justify-center">
+                            <a href="https://www.instagram.com/ahmadfarrosfayyadh/" target="_blank" class="w-11 h-11 rounded-xl glass-card flex items-center justify-center text-pink-400 hover:bg-pink-500 hover:text-white transition-all text-lg">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="https://linkedin.com" target="_blank" class="w-11 h-11 rounded-xl glass-card flex items-center justify-center text-sky-400 hover:bg-sky-500 hover:text-white transition-all text-lg">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="https://github.com" target="_blank" class="w-11 h-11 rounded-xl glass-card flex items-center justify-center text-gray-300 hover:bg-white hover:text-darkBg transition-all text-lg">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:farrosfayyadh@gmail.com" class="w-11 h-11 rounded-xl glass-card flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all text-lg">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-accent tracking-widest uppercase mb-2">Mengenal Lebih Dekat</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Visi & Perjalanan Karir</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-600/20 text-brand-500 flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Filosofi Konten</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Fokus menyampaikan ide-ide teknis, teknologi futuristik, dan edukasi digital secara interaktif & mudah dipahami audiens milenial serta gen-Z.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-neon/20 text-brand-neon flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Keahlian Teknis</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Pengembangan Web Modern (React, Tailwind CSS, Javascript), Desain UI/UX modern, Optimasi performa situs, serta integrasi platform media sosial.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+                    <div class="w-14 h-14 rounded-2xl bg-brand-accent/20 text-brand-accent flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition-transform">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dampak Digital</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Membantu berbagai brand & UMKM membangun reputasi digital profesional melalui desain terkonsep dan strategi kampanye bernilai estetika tinggi.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 px-4 relative z-10 bg-darkBg/60">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16">
+                <h2 class="text-xs font-bold text-brand-accent tracking-widest uppercase mb-2">Layanan Utama</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Solusi Digital Kreatif & Terintegrasi</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Service 1 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-purple-600 to-pink-500 flex items-center justify-center text-white text-xl mb-4 group-hover:rotate-6 transition-transform">
+                            <i class="fas fa-photo-video"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Content Creation</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                            Pembuatan konten video pendek, reels tech, serta campaign edukatif bernilai keterlibatan (engagement) tinggi.
+                        </p>
+                    </div>
+                    <a href="#contact" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">Konsultasi <i class="fas fa-arrow-right text-[10px]"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white text-xl mb-4 group-hover:rotate-6 transition-transform">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Web Development</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                            Pembuatan website company profile, landing page bisnis, dan portofolio interaktif responsif & ultra-cepat.
+                        </p>
+                    </div>
+                    <a href="#contact" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">Konsultasi <i class="fas fa-arrow-right text-[10px]"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-white text-xl mb-4 group-hover:rotate-6 transition-transform">
+                            <i class="fas fa-pen-nib"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">UI/UX & Branding</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                            Perancangan antarmuka aplikasi/website intuitif, sistem desain visual, serta elemen identitas brand modern.
+                        </p>
+                    </div>
+                    <a href="#contact" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">Konsultasi <i class="fas fa-arrow-right text-[10px]"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-card p-6 rounded-2xl flex flex-col justify-between group">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 to-orange-500 flex items-center justify-center text-white text-xl mb-4 group-hover:rotate-6 transition-transform">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Brand Partnership</h3>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">
+                            Kolaborasi endorsement produk teknologi, aplikasi digital, dan tinjauan perangkat secara profesional.
+                        </p>
+                    </div>
+                    <a href="#contact" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">Konsultasi <i class="fas fa-arrow-right text-[10px]"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculator" class="py-20 px-4 relative z-10">
+        <div class="max-w-4xl mx-auto glass-panel p-8 sm:p-12 rounded-3xl shadow-2xl">
+            <div class="text-center mb-10">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-accent text-xs font-bold mb-3">
+                    <i class="fas fa-calculator"></i> Interactive Cost Estimator
+                </div>
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white">Hitung Estimasi Proyek Anda</h3>
+                <p class="text-xs sm:text-sm text-gray-400 mt-2">Pilih kategori dan spesifikasi untuk mendapatkan gambaran awal investasi proyek Anda.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Select Type -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-3">1. Jenis Layanan / Proyek</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <button type="button" onclick="selectServiceType(this, 'web', 2500000)" class="service-type-btn active p-4 rounded-xl glass-card text-left text-xs font-semibold border-brand-500 text-white">
+                            <i class="fas fa-globe text-brand-accent mb-2 text-base block"></i>
+                            Website Profile / Landing Page
+                        </button>
+                        <button type="button" onclick="selectServiceType(this, 'content', 1500000)" class="service-type-btn p-4 rounded-xl glass-card text-left text-xs font-semibold text-gray-400">
+                            <i class="fas fa-video text-pink-500 mb-2 text-base block"></i>
+                            Instagram Reels / Campaign
+                        </button>
+                        <button type="button" onclick="selectServiceType(this, 'uiux', 2000000)" class="service-type-btn p-4 rounded-xl glass-card text-left text-xs font-semibold text-gray-400">
+                            <i class="fas fa-figma text-amber-500 mb-2 text-base block"></i>
+                            UI/UX Application Design
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Page / Output Slider -->
+                <div>
+                    <div class="flex justify-between text-xs font-bold mb-2">
+                        <span class="text-gray-300" id="sliderLabel">Jumlah Halaman / Fitur Utama</span>
+                        <span class="text-brand-accent text-sm" id="sliderVal">3 Halaman</span>
+                    </div>
+                    <input type="range" id="projectScopeSlider" min="1" max="10" value="3" oninput="updateCalculator()" class="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer accent-brand-500">
+                </div>
+
+                <!-- Additional Features Checkbox -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-300 mb-3">2. Fitur Tambahan (Opsional)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <label class="flex items-center gap-3 p-3 rounded-xl glass-card cursor-pointer">
+                            <input type="checkbox" id="featCMS" onchange="updateCalculator()" class="rounded border-gray-700 text-brand-600 focus:ring-0">
+                            <span>Integrasi CMS / Content Admin</span>
+                        </label>
+                        <label class="flex items-center gap-3 p-3 rounded-xl glass-card cursor-pointer">
+                            <input type="checkbox" id="featSpeed" onchange="updateCalculator()" class="rounded border-gray-700 text-brand-600 focus:ring-0">
+                            <span>Prioritas Pengerjaan Cepat (Express)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Price Result Bar -->
+                <div class="p-6 rounded-2xl bg-gradient-to-r from-brand-900/90 to-darkBg border border-brand-500/30 flex flex-col sm:flex-row items-center justify-between gap-4 mt-8">
+                    <div>
+                        <div class="text-xs text-gray-400">Estimasi Total Biaya:</div>
+                        <div class="text-2xl sm:text-3xl font-extrabold text-gradient-gold" id="calculatedPrice">IDR 3.500.000</div>
+                    </div>
+                    <a href="#contact" onclick="applyEstimateToContact()" class="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-600 to-brand-neon text-white font-bold text-xs hover:opacity-90 transition-all w-full sm:w-auto text-center">
+                        Pesan Sesuai Estimasi
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio" class="py-20 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-xs font-bold text-brand-accent tracking-widest uppercase mb-2">Showcase & Portfolio</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Hasil Karya Pilihan</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+                <button onclick="filterPortfolio('all')" class="port-filter-btn px-5 py-2 rounded-xl text-xs font-bold bg-brand-600 text-white transition-all">Semua</button>
+                <button onclick="filterPortfolio('web')" class="port-filter-btn px-5 py-2 rounded-xl text-xs font-bold glass-card text-gray-400 hover:text-white transition-all">Web Dev</button>
+                <button onclick="filterPortfolio('media')" class="port-filter-btn px-5 py-2 rounded-xl text-xs font-bold glass-card text-gray-400 hover:text-white transition-all">Content Media</button>
+                <button onclick="filterPortfolio('uiux')" class="port-filter-btn px-5 py-2 rounded-xl text-xs font-bold glass-card text-gray-400 hover:text-white transition-all">UI/UX Design</button>
+            </div>
+
+            <!-- Portfolio Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolioGrid">
+                <!-- Item 1 -->
+                <div class="portfolio-card glass-card rounded-3xl overflow-hidden group" data-category="web">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://placehold.co/600x400/1e1b4b/ffffff?text=Modern+Dashboard" alt="Project 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-brand-600/80 text-[10px] font-bold text-white">Web Dev</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Futuristic Tech Platform</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">Aplikasi web berbasis React dengan tampilan interaktif dark mode untuk analitik data.</p>
+                        <button onclick="openModal('Futuristic Tech Platform', 'Web Dev', 'https://placehold.co/600x400/1e1b4b/ffffff?text=Modern+Dashboard', 'Project web aplikasi interaktif dengan sistem analitik real-time dan performa tinggi.')" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">
+                            Lihat Detail <i class="fas fa-expand text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="portfolio-card glass-card rounded-3xl overflow-hidden group" data-category="media">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://placehold.co/600x400/31103f/ffffff?text=Tech+Reels+Campaign" alt="Project 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-pink-600/80 text-[10px] font-bold text-white">Instagram Campaign</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Creative Tech Reels Series</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">Seri konten edukasi AI & Gadget yang berhasil meraih 250k+ penayangan organik.</p>
+                        <button onclick="openModal('Creative Tech Reels Series', 'Instagram Campaign', 'https://placehold.co/600x400/31103f/ffffff?text=Tech+Reels+Campaign', 'Campaign video pendek terstruktur yang mempromosikan tren kecerdasan buatan bagi kalangan muda.')" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">
+                            Lihat Detail <i class="fas fa-expand text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="portfolio-card glass-card rounded-3xl overflow-hidden group" data-category="uiux">
+                    <div class="relative h-52 overflow-hidden">
+                        <img src="https://placehold.co/600x400/064e3b/ffffff?text=Smart+Mobile+App" alt="Project 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute top-4 left-4 px-3 py-1 rounded-full bg-emerald-600/80 text-[10px] font-bold text-white">UI/UX Design</span>
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-lg font-bold text-white mb-2">Smart IoT Mobile UI</h4>
+                        <p class="text-xs text-gray-400 leading-relaxed mb-4">Desain antarmuka aplikasi rumah pintar dengan navigasi intuitif & clean design.</p>
+                        <button onclick="openModal('Smart IoT Mobile UI', 'UI/UX Design', 'https://placehold.co/600x400/064e3b/ffffff?text=Smart+Mobile+App', 'Konsep UI/UX aplikasi IoT untuk mengontrol perangkat elektronik rumah secara praktis.')" class="text-xs font-bold text-brand-accent hover:underline flex items-center gap-1">
+                            Lihat Detail <i class="fas fa-expand text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="instagram" class="py-20 px-4 relative z-10 bg-darkBg/60">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-pink-500/10 text-pink-400 text-xs font-bold mb-3">
+                    <i class="fab fa-instagram"></i> Instagram Hub
+                </div>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Highlight Feed & Konten Terbaru</h3>
+                <p class="text-xs sm:text-sm text-gray-400 mt-2">Cuplikan reels dan unggahan dari profil <a href="https://www.instagram.com/ahmadfarrosfayyadh/" target="_blank" class="text-pink-400 underline font-bold">@ahmadfarrosfayyadh</a></p>
+            </div>
+
+            <!-- Instagram Grid Mockup -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Post 1 -->
+                <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600">
+                                <img src="https://placehold.co/100x100/0f172a/ffffff?text=AF" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white">ahmadfarrosfayyadh</h5>
+                                <p class="text-[10px] text-gray-400">Teknologi & Inovasi</p>
+                            </div>
+                        </div>
+                        <div class="relative rounded-xl overflow-hidden mb-3 aspect-square bg-gray-900 flex items-center justify-center">
+                            <img src="https://placehold.co/400x400/1e293b/a855f7?text=Setup+Tour+2026" class="w-full h-full object-cover">
+                            <button onclick="likePost(this)" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:text-pink-500 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            <span class="font-bold text-white">ahmadfarrosfayyadh</span> Momen produktif di desk setup baru! Siap meluncurkan projek interaktif selanjutnya. 🚀⚡
+                        </p>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-gray-800 text-[11px] text-gray-400 flex justify-between">
+                        <span class="likes-count"><i class="fas fa-heart text-pink-500 mr-1"></i> 1,240 Suka</span>
+                        <span>View on Instagram</span>
+                    </div>
+                </div>
+
+                <!-- Post 2 -->
+                <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600">
+                                <img src="https://placehold.co/100x100/0f172a/ffffff?text=AF" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white">ahmadfarrosfayyadh</h5>
+                                <p class="text-[10px] text-gray-400">Reels Highlight</p>
+                            </div>
+                        </div>
+                        <div class="relative rounded-xl overflow-hidden mb-3 aspect-square bg-gray-900 flex items-center justify-center">
+                            <img src="https://placehold.co/400x400/065f46/ffffff?text=AI+Tools+Tips" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                <div class="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center text-white text-lg">
+                                    <i class="fas fa-play"></i>
+                                </div>
+                            </div>
+                            <button onclick="likePost(this)" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:text-pink-500 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            <span class="font-bold text-white">ahmadfarrosfayyadh</span> 3 Tools AI wajib untuk mempercepat alur kerja pembuatan web & media sosial! 🔥
+                        </p>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-gray-800 text-[11px] text-gray-400 flex justify-between">
+                        <span class="likes-count"><i class="fas fa-heart text-pink-500 mr-1"></i> 3,890 Suka</span>
+                        <span>Watch Reel</span>
+                    </div>
+                </div>
+
+                <!-- Post 3 -->
+                <div class="glass-card rounded-2xl p-4 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 rounded-full p-0.5 bg-gradient-to-tr from-amber-500 via-pink-500 to-purple-600">
+                                <img src="https://placehold.co/100x100/0f172a/ffffff?text=AF" class="w-full h-full rounded-full object-cover">
+                            </div>
+                            <div>
+                                <h5 class="text-xs font-bold text-white">ahmadfarrosfayyadh</h5>
+                                <p class="text-[10px] text-gray-400">Brand Collaboration</p>
+                            </div>
+                        </div>
+                        <div class="relative rounded-xl overflow-hidden mb-3 aspect-square bg-gray-900 flex items-center justify-center">
+                            <img src="https://placehold.co/400x400/3730a3/ffffff?text=UI+Design+Review" class="w-full h-full object-cover">
+                            <button onclick="likePost(this)" class="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/60 text-white flex items-center justify-center hover:text-pink-500 transition-colors">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            <span class="font-bold text-white">ahmadfarrosfayyadh</span> Kolaborasi seru merancang ulang konsep UI/UX aplikasi lokal agar tampil kelas dunia.
+                        </p>
+                    </div>
+                    <div class="mt-3 pt-3 border-t border-gray-800 text-[11px] text-gray-400 flex justify-between">
+                        <span class="likes-count"><i class="fas fa-heart text-pink-500 mr-1"></i> 2,150 Suka</span>
+                        <span>View Details</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-4 relative z-10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12">
+            
+            <!-- Contact Info & Form -->
+            <div class="lg:col-span-7 glass-panel p-8 sm:p-10 rounded-3xl">
+                <h3 class="text-2xl sm:text-3xl font-extrabold text-white mb-2">Mari Berkolaborasi!</h3>
+                <p class="text-xs sm:text-sm text-gray-400 mb-8">Punya ide menarik atau butuh jasa pembuatan produk digital? Kirimkan pesan langsung di bawah ini.</p>
+
+                <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">Nama Anda</label>
+                            <input type="text" required id="formName" placeholder="Masukkan nama..." class="w-full px-4 py-3 rounded-xl bg-darkBg/80 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-300 mb-1.5">Email / WhatsApp</label>
+                            <input type="text" required id="formContact" placeholder="Email atau nomor WA..." class="w-full px-4 py-3 rounded-xl bg-darkBg/80 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-500 transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1.5">Subjek / Kebutuhan</label>
+                        <input type="text" id="formSubject" placeholder="Contoh: Pembuatan Website Company Profile" class="w-full px-4 py-3 rounded-xl bg-darkBg/80 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-500 transition-colors">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-gray-300 mb-1.5">Pesan Lengkap</label>
+                        <textarea rows="4" required id="formMessage" placeholder="Tuliskan detail ide atau pertanyaan Anda di sini..." class="w-full px-4 py-3 rounded-xl bg-darkBg/80 border border-gray-800 text-white text-xs focus:outline-none focus:border-brand-500 transition-colors"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-brand-600 via-brand-500 to-brand-neon text-white font-bold text-sm hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-600/30">
+                        <i class="fas fa-paper-plane"></i>
+                        <span>Kirim Pesan Sekarang</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Mini AI / FAQ Assistant Widget -->
+            <div class="lg:col-span-5 glass-panel p-6 rounded-3xl flex flex-col justify-between relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10 text-brand-neon text-9xl pointer-events-none">
+                    <i class="fas fa-robot"></i>
+                </div>
+
+                <div>
+                    <div class="flex items-center gap-3 pb-4 mb-4 border-b border-gray-800">
+                        <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white text-lg">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-bold text-white">Farros Virtual Assistant</h4>
+                            <span class="text-[10px] text-emerald-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Online & Siap Menjawab
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Chat Box Messages -->
+                    <div id="chatBox" class="h-64 overflow-y-auto space-y-3 pr-2 text-xs">
+                        <div class="bg-brand-900/50 p-3 rounded-2xl max-w-[85%] border border-brand-500/20 text-gray-200">
+                            Halo! Saya Asisten AI Ahmad Farros Fayyadh. Ada yang bisa saya bantu terkait layanan atau kontak beliau?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Prompts & Chat Input -->
+                <div class="mt-4 pt-4 border-t border-gray-800">
+                    <div class="flex flex-wrap gap-1.5 mb-3">
+                        <button onclick="sendQuickPrompt('Siapa Ahmad Farros Fayyadh?')" class="px-2.5 py-1 rounded-lg bg-gray-800 hover:bg-brand-600 text-[10px] text-gray-300 hover:text-white transition-all">Siapa Farros?</button>
+                        <button onclick="sendQuickPrompt('Berapa lama estimasi pengerjaan web?')" class="px-2.5 py-1 rounded-lg bg-gray-800 hover:bg-brand-600 text-[10px] text-gray-300 hover:text-white transition-all">Waktu Web Dev?</button>
+                        <button onclick="sendQuickPrompt('Bagaimana cara kolaborasi Instagram?')" class="px-2.5 py-1 rounded-lg bg-gray-800 hover:bg-brand-600 text-[10px] text-gray-300 hover:text-white transition-all">Kolaborasi IG</button>
+                    </div>
+
+                    <div class="flex gap-2">
+                        <input type="text" id="chatInput" placeholder="Tanyakan sesuatu..." onkeypress="if(event.key==='Enter') sendChatMessage()" class="flex-1 px-3 py-2 rounded-xl bg-darkBg border border-gray-800 text-xs text-white focus:outline-none focus:border-brand-500">
+                        <button onclick="sendChatMessage()" class="w-10 h-10 rounded-xl bg-brand-600 text-white flex items-center justify-center hover:bg-brand-500 transition-colors">
+                            <i class="fas fa-paper-plane text-xs"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-8 px-4 border-t border-gray-800/80 text-center relative z-10 text-xs text-gray-500">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div>
+                © 2026 <span class="text-white font-bold">Ahmad Farros Fayyadh</span>. All rights reserved.
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="https://www.instagram.com/ahmadfarrosfayyadh/" target="_blank" class="hover:text-pink-400 transition-colors">Instagram</a>
+                <a href="#about" class="hover:text-white transition-colors">Tentang</a>
+                <a href="#portfolio" class="hover:text-white transition-colors">Portofolio</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Portfolio Detail Modal -->
+    <div id="portfolioModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <div class="glass-panel max-w-xl w-full p-6 sm:p-8 rounded-3xl relative animate-float">
+            <button onclick="closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full glass-card text-gray-400 hover:text-white flex items-center justify-center">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="h-48 rounded-2xl overflow-hidden mb-4">
+                <img id="modalImg" src="" class="w-full h-full object-cover">
+            </div>
+            <span id="modalCategory" class="px-3 py-1 rounded-full bg-brand-600 text-[10px] font-bold text-white inline-block mb-2">Category</span>
+            <h3 id="modalTitle" class="text-xl font-bold text-white mb-2">Project Title</h3>
+            <p id="modalDesc" class="text-xs text-gray-300 leading-relaxed mb-6">Description...</p>
+            <button onclick="closeModal()" class="w-full py-3 rounded-xl bg-gray-800 text-white font-bold text-xs hover:bg-gray-700 transition-colors">
+                Tutup Window
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 glass-panel px-5 py-3 rounded-xl border border-emerald-500/50 text-white text-xs flex items-center gap-3 shadow-2xl">
+        <i class="fas fa-check-circle text-emerald-400 text-lg"></i>
+        <span id="toastMsg">Pesan berhasil dikirimkan!</span>
+    </div>
+
+    <script>
+        // 1. Interactive Particle Canvas Background
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.color = ['rgba(99, 102, 241, 0.4)', 'rgba(168, 85, 247, 0.4)', 'rgba(6, 182, 212, 0.4)'][Math.floor(Math.random() * 3)];
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0) this.x = canvas.width;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y < 0) this.y = canvas.height;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 15000);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // 2. Audio/Sound Feedback Mock
+        let soundEnabled = false;
+        function toggleSoundFeedback() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('soundIcon');
+            if (soundEnabled) {
+                icon.className = 'fas fa-volume-high text-brand-accent';
+                showToast('Fitur Audio UI Diaktifkan 🔊');
+            } else {
+                icon.className = 'fas fa-volume-xmark text-gray-400';
+                showToast('Audio Muted');
+            }
+        }
+
+        // 3. Mobile Navigation Drawer
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileDrawer = document.getElementById('mobileDrawer');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileDrawer.classList.toggle('hidden');
+        });
+
+        // 4. Interactive Cost Calculator Logic
+        let basePrice = 2500000;
+        function selectServiceType(btn, type, base) {
+            document.querySelectorAll('.service-type-btn').forEach(b => {
+                b.classList.remove('active', 'border-brand-500', 'text-white');
+                b.classList.add('text-gray-400');
+            });
+            btn.classList.add('active', 'border-brand-500', 'text-white');
+            btn.classList.remove('text-gray-400');
+            
+            basePrice = base;
+            const sliderLabel = document.getElementById('sliderLabel');
+            if (type === 'content') {
+                sliderLabel.innerText = 'Jumlah Reels / Video Short';
+            } else {
+                sliderLabel.innerText = 'Jumlah Halaman / Fitur Utama';
+            }
+            updateCalculator();
+        }
+
+        function updateCalculator() {
+            const scopeVal = parseInt(document.getElementById('projectScopeSlider').value);
+            document.getElementById('sliderVal').innerText = scopeVal + ' Item/Halaman';
+
+            let total = basePrice + (scopeVal - 1) * 500000;
+
+            if (document.getElementById('featCMS').checked) total += 750000;
+            if (document.getElementById('featSpeed').checked) total += 1000000;
+
+            document.getElementById('calculatedPrice').innerText = 'IDR ' + total.toLocaleString('id-ID');
+        }
+
+        function applyEstimateToContact() {
+            const est = document.getElementById('calculatedPrice').innerText;
+            document.getElementById('formSubject').value = 'Pemesanan Projek (Estimasi ' + est + ')';
+            showToast('Estimasi harga telah diterapkan ke Form Kontak!');
+        }
+
+        // 5. Portfolio Filtering & Modal System
+        function filterPortfolio(category) {
+            const cards = document.querySelectorAll('.portfolio-card');
+            const btns = document.querySelectorAll('.port-filter-btn');
+
+            btns.forEach(b => {
+                b.classList.remove('bg-brand-600', 'text-white');
+                b.classList.add('glass-card', 'text-gray-400');
+            });
+
+            event.target.classList.remove('glass-card', 'text-gray-400');
+            event.target.classList.add('bg-brand-600', 'text-white');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        function openModal(title, cat, img, desc) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategory').innerText = cat;
+            document.getElementById('modalImg').src = img;
+            document.getElementById('modalDesc').innerText = desc;
+            document.getElementById('portfolioModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('portfolioModal').classList.add('hidden');
+        }
+
+        // 6. Instagram Heart Like Animation
+        function likePost(btn) {
+            btn.classList.toggle('text-pink-500');
+            const icon = btn.querySelector('i');
+            if (btn.classList.contains('text-pink-500')) {
+                showToast('Menyukai postingan @ahmadfarrosfayyadh ❤️');
+            }
+        }
+
+        // 7. Interactive Mini AI Assistant
+        const faqAnswers = {
+            'siapa': 'Ahmad Farros Fayyadh adalah seorang Digital Creator, Web Developer, dan Strategis Media Digital yang berfokus pada inovasi teknologi dan visual.',
+            'waktu': 'Estimasi pembuatan website standar berkisar antara 3 hingga 7 hari kerja tergantung pada kompleksitas fitur yang diminta.',
+            'ig': 'Untuk kolaborasi Instagram atau brand sponsorship, Anda bisa langsung menghubungi via DM Instagram @ahmadfarrosfayyadh atau melalui Form Kontak di bawah.',
+            'default': 'Terima kasih atas pertanyaannya! Anda juga dapat menghubungi Ahmad Farros secara langsung melalui email farrosfayyadh@gmail.com.'
+        };
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const txt = input.value.trim();
+            if (!txt) return;
+
+            appendChat(txt, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                let response = faqAnswers['default'];
+                const lower = txt.toLowerCase();
+                if (lower.includes('siapa') || lower.includes('farros')) response = faqAnswers['siapa'];
+                else if (lower.includes('waktu') || lower.includes('lama') || lower.includes('web')) response = faqAnswers['waktu'];
+                else if (lower.includes('ig') || lower.includes('instagram') || lower.includes('kolaborasi')) response = faqAnswers['ig'];
+
+                appendChat(response, 'bot');
+            }, 600);
+        }
+
+        function sendQuickPrompt(promptText) {
+            document.getElementById('chatInput').value = promptText;
+            sendChatMessage();
+        }
+
+        function appendChat(text, sender) {
+            const box = document.getElementById('chatBox');
+            const msgDiv = document.createElement('div');
+
+            if (sender === 'user') {
+                msgDiv.className = 'bg-brand-600 text-white p-3 rounded-2xl max-w-[85%] ml-auto text-right text-xs';
+            } else {
+                msgDiv.className = 'bg-brand-900/50 text-gray-200 p-3 rounded-2xl max-w-[85%] border border-brand-500/20 text-xs';
+            }
+
+            msgDiv.innerText = text;
+            box.appendChild(msgDiv);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        // 8. Contact Form Handling
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('formName').value;
+            showToast(`Terima kasih, ${name}! Pesan Anda telah terkirim.`);
+            document.getElementById('contactForm').reset();
+        }
+
+        // 9. Toast Notification Helper
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
